@@ -12,11 +12,28 @@ public class DemoController {
     private Coach myCoach;
 
     /*
+        Constructor Injection Example
         @Autowired annotation tells Spring to inject a dependency. If you only
         have one constructor then @Autowired on constructor is optional
-     */
     @Autowired
     public DemoController(Coach theCoach) {
+        myCoach = theCoach;
+    }
+    */
+
+    /*
+        Setter Injection Example (Need to use the @Autowired annotation)
+        This method name don't need to be 'setCoach'. we can use any name.
+
+    @Autowired
+    public void doSomeStuff(Coach theCoach) {
+         // We can have some logic here not just a regular setter.
+    myCoach = theCoach;
+    }
+    */
+
+    @Autowired
+    public void setCoach(Coach theCoach) {
         myCoach = theCoach;
     }
 
