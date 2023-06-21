@@ -2,6 +2,7 @@ package com.luv2code.springcoredemo.rest;
 
 import com.luv2code.springcoredemo.common.Coach;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,8 +17,12 @@ public class DemoController {
         @Autowired annotation tells Spring to inject a dependency. If you only
         have one constructor then @Autowired on constructor is optional
     */
+    /*
+        To use the @Qualifier we need to specify the bean id:
+        Same name as class, first character lower-case
+     */
     @Autowired
-    public DemoController(Coach theCoach) {
+    public DemoController(@Qualifier("baseballCoach") Coach theCoach) {
         myCoach = theCoach;
     }
 
