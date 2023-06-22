@@ -27,9 +27,10 @@ public class DemoController {
     public DemoController(
             /*
                 Singleton Scope: theCoach and theAnotherCoach injections refer to the SAME bean
+            @Qualifier("cricketCoach") Coach theCoach,
+            @Qualifier("cricketCoach") Coach theAnotherCoach
              */
-            @Qualifier("cricketCoach") Coach theCoach
-//            @Qualifier("cricketCoach") Coach theAnotherCoach
+           @Qualifier("aquatic") Coach theCoach
     ) {
         System.out.println("In constructor: " + getClass().getSimpleName());
         myCoach = theCoach;
