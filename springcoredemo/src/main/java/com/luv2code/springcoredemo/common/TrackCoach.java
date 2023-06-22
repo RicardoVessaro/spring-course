@@ -1,6 +1,5 @@
 package com.luv2code.springcoredemo.common;
 
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Component;
     Beans annotated with @Lazy are not initialized, they will be initialized when they are used for dependency injection
     (as a dependency) or when they are explicitly request (endpoint of a @RestController for example).
  */
-@Lazy
+// @Lazy
 public class TrackCoach implements Coach {
 
     public TrackCoach() {
