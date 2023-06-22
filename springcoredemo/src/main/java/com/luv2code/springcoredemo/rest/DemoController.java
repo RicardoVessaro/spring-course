@@ -12,7 +12,7 @@ public class DemoController {
     // define a private field for the dependency
     private Coach myCoach;
 
-    private Coach anotherCoach;
+//    private Coach anotherCoach;
 
     /*
         Constructor Injection Example
@@ -28,11 +28,12 @@ public class DemoController {
             /*
                 Singleton Scope: theCoach and theAnotherCoach injections refer to the SAME bean
              */
-            @Qualifier("cricketCoach") Coach theCoach,
-            @Qualifier("cricketCoach") Coach theAnotherCoach) {
+            @Qualifier("cricketCoach") Coach theCoach
+//            @Qualifier("cricketCoach") Coach theAnotherCoach
+    ) {
         System.out.println("In constructor: " + getClass().getSimpleName());
         myCoach = theCoach;
-        anotherCoach = theAnotherCoach;
+//        anotherCoach = theAnotherCoach;
     }
 
     /*
@@ -56,10 +57,10 @@ public class DemoController {
         return myCoach.getDailyWorkout();
     }
 
-    @GetMapping("/check")
-    public String check() {
-        // If singleton scope is true, if prototype scope is false
-        return "Comparing beans: myCoach == anotherCoach, " + (myCoach == anotherCoach);
-    }
+//    @GetMapping("/check")
+//    public String check() {
+//        // If singleton scope is true, if prototype scope is false
+//        return "Comparing beans: myCoach == anotherCoach, " + (myCoach == anotherCoach);
+//    }
 
 }
