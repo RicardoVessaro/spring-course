@@ -35,7 +35,7 @@ public class StudentDAOImpl implements StudentDAO {
     @Override
     /*
         @Transactional: Handle the transactional management
-            while we are performing an update (persisting).
+            while we are performing an update (persisting, modifying the database).
      */
     @Transactional
     public void save(Student theStudent) {
@@ -98,6 +98,20 @@ public class StudentDAOImpl implements StudentDAO {
 
         // delete the student
         entityManager.remove(theStudent);
+    }
+
+    @Override
+    @Transactional // We are perfoming a delete
+    public int deleteAll() {
+
+        /*
+            'executeUpdate' method execute the query statement.
+            Remember the method name "update" is a generic term, indicating we are "modifying" the database
+         */
+        int numRowsDeleted = entityManager.createQuery("DELETE FROM Student")
+            .executeUpdate();
+
+        return numRowsDeleted;
     }
 
 }
