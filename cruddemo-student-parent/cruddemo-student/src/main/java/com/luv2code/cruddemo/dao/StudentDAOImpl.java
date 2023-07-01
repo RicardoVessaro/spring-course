@@ -2,9 +2,12 @@ package com.luv2code.cruddemo.dao;
 
 import com.luv2code.cruddemo.entity.Student;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /*
     The DAO (Data Access Object) is the helper class of our application to handle data logic, like persistence,
@@ -43,5 +46,23 @@ public class StudentDAOImpl implements StudentDAO {
     // No need to add @Transactional since we are only reading data
     public Student findById(Integer id) {
         return entityManager.find(Student.class, id);
+    }
+
+    // No need to add @Transactional since we are doing a query
+    @Override
+    public List<Student> findAll() {
+
+        /*
+            All JPQL syntax is based on entity name and entity fields
+            "Student" is the name of the JPA Entity, the class name not the table name.
+            "lastName" is the field of the JPA entity.
+            We are ordering students by the last name. By default, the sort is ascending (ASC) but we can order
+                descending (DESC).
+         */
+        // create query
+        TypedQuery<Student> theQuery = entityManager.createQuery("FROM Student order by lastName", Student.class);
+
+        // return query results
+        return theQuery.getResultList();
     }
 }
