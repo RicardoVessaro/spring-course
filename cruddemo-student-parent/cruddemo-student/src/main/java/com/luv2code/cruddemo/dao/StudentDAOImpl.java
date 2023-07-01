@@ -7,6 +7,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /*
+    The DAO (Data Access Object) is the helper class of our application to handle data logic, like persistence,
+    transaction, and search.
+    The DAO uses the Spring Entity Manager to connect to the database. The Entity Manager uses a datasource to connect
+    and to manage the database in our application. This datasource is defined in our application.properties file.
+ */
+/*
     @Repository: Specialized annotation for repositories,
     supports component scanning and translates JDBC exceptions.
  */
