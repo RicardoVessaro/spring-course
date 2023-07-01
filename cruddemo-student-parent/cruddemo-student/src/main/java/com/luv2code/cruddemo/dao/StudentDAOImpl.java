@@ -58,9 +58,26 @@ public class StudentDAOImpl implements StudentDAO {
             "lastName" is the field of the JPA entity.
             We are ordering students by the last name. By default, the sort is ascending (ASC) but we can order
                 descending (DESC).
+
+                "FROM Student order by lastName"
          */
         // create query
-        TypedQuery<Student> theQuery = entityManager.createQuery("FROM Student order by lastName", Student.class);
+        TypedQuery<Student> theQuery = entityManager.createQuery("FROM Student", Student.class);
+
+        // return query results
+        return theQuery.getResultList();
+    }
+
+    // ":theData" is JPQL named parameter, it is prefixed with a colon :
+    @Override
+    public List<Student> findByLastName(String theLastName) {
+        // create query
+        TypedQuery<Student> theQuery = entityManager.createQuery(
+            "FROM Student WHERE lastName=:theData", Student.class);
+
+        // set query parameters
+        // "theData" is the parameter
+        theQuery.setParameter("theData", theLastName);
 
         // return query results
         return theQuery.getResultList();
