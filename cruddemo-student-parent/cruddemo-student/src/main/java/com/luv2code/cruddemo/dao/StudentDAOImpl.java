@@ -40,6 +40,7 @@ public class StudentDAOImpl implements StudentDAO {
     }
 
     @Override
+    // No need to add @Transactional since we are only reading data
     public Student findById(Integer id) {
         return entityManager.find(Student.class, id);
     }
