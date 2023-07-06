@@ -2,10 +2,9 @@ package com.luv2code.demo.rest;
 
 import com.luv2code.demo.entity.Student;
 import jakarta.annotation.PostConstruct;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +44,35 @@ public class StudentRestController {
 
         // just index into the list ... keep it simple for now
 
+        // check the studentId against list size
+
+        if( (studentId >= theStudents.size()) || (studentId < 0) ) {
+            // Throwing a custom exception that is handled by an Exception Handler.
+            throw new StudentNotFoundException("Student id not found - " + studentId);
+        }
+
         return theStudents.get(studentId);
     }
 
+    /*
+        @ExceptionHandler: Defines this method as an Exception Handler
+        ResponseEntity: Wraps Http object where we can define status code, message, etc.
+        StudentErrorResponse: Response type in ResponseEntity
+        StudentNotFoundException: This method handle/catch this type of Exception.
+     */
+    // Add an exception handler using @ExceptionHandler
+    @ExceptionHandler
+    public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException exc) {
+
+        // create a StudentErrorResponse
+        StudentErrorResponse error = new StudentErrorResponse();
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setMessage(exc.getMessage());
+        error.setTimeStamp(System.currentTimeMillis());
+
+        // Return ResponseEntity
+        // 'error' is the body.
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 
 }
