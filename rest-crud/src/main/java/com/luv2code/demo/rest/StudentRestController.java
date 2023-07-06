@@ -61,6 +61,7 @@ public class StudentRestController {
         StudentNotFoundException: This method handle/catch this type of Exception.
      */
     // Add an exception handler using @ExceptionHandler
+    /*
     @ExceptionHandler
     public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException exc) {
 
@@ -74,9 +75,10 @@ public class StudentRestController {
         // 'error' is the body.
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
-
+    */
     // Add another exception handler ... to catch any exception (catch all)
     // Exception: To handle generic exceptions
+    /*
     @ExceptionHandler
     public ResponseEntity<StudentErrorResponse> handleException(Exception exc) {
 
@@ -89,5 +91,5 @@ public class StudentRestController {
         // Return ResponseEntity
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
-
+    */
 }
