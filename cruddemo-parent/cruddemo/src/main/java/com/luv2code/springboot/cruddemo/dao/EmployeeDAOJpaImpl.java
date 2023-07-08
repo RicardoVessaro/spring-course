@@ -12,6 +12,8 @@ import java.util.List;
 @Repository
 public class EmployeeDAOJpaImpl implements EmployeeDAO{
 
+    // We don't use @Transaction at DAO layer because it will be handled at Service layer
+
     // define field for entityManager
     private EntityManager entityManager;
 
@@ -32,5 +34,40 @@ public class EmployeeDAOJpaImpl implements EmployeeDAO{
 
         // return the results
         return employees;
+    }
+
+    @Override
+    public Employee findById(int theId) {
+
+        // get employee
+        Employee theEmployee = entityManager.find(Employee.class, theId);
+
+        // return employee
+        return theEmployee;
+    }
+
+    @Override
+    public Employee save(Employee theEmployee) {
+
+        /*
+            entityManager.merge :
+                If id == 0 (or is null) then insert/save else update
+         */
+        // save employee
+        Employee dbEmployee = entityManager.merge(theEmployee);
+
+        // 'dbEmployee' has updated id from the database (in case of the insert)
+        // return the dbEmployee
+        return dbEmployee;
+    }
+
+    @Override
+    public void deleteById(int theId) {
+
+        // find employee by id
+        Employee theEmployee = entityManager.find(Employee.class, theId);
+
+        // remove employee
+        entityManager.remove(theEmployee);
     }
 }
