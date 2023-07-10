@@ -4,6 +4,8 @@ import com.luv2code.springboot.cruddemo.entity.Employee;
 
 import java.util.List;
 
+// Deprecated because we are using Spring Data JPA
+@Deprecated
 public interface EmployeeDAO {
 
     List<Employee> findAll();

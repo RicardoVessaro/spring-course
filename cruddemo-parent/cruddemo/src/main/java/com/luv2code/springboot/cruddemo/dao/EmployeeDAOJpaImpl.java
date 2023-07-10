@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 // We are using only JPA (Hibernate, Entity Manager, Data Source)
+// Deprecated because we are using Spring Data JPA
+@Deprecated
 @Repository
 public class EmployeeDAOJpaImpl implements EmployeeDAO{
 
