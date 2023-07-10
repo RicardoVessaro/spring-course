@@ -3,7 +3,10 @@ package com.luv2code.springboot.cruddemo.service;
 import com.luv2code.springboot.cruddemo.entity.Employee;
 
 import java.util.List;
-
+/*
+    @Deprecated because we are using Spring Data REST
+ */
+@Deprecated
 public interface EmployeeService {
 
     List<Employee> findAll();

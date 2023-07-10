@@ -7,8 +7,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api")
+/*
+    @Deprecated because we are using Spring Data REST
+    Commenting @RestController and @RequestMapping to not use this class anymore
+ */
+@Deprecated
+//@RestController
+//@RequestMapping("/api")
 public class EmployeeRestController {
 
     private EmployeeService employeeService;
