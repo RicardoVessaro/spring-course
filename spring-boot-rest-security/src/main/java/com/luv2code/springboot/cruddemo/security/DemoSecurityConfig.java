@@ -5,15 +5,52 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import javax.sql.DataSource;
 
 // Spring Security Configuration
 @Configuration
 public class DemoSecurityConfig {
 
+    // add support for JDBC ... no more hardcoded users :-)
+
+    /*
+        Tell Spring Security to use JDBC authentication with our data source
+        By default Spring uses the Users and the Authorities table.
+     */
+    @Bean
+    public UserDetailsManager userDetailsManager(DataSource dataSource) {
+
+        return new JdbcUserDetailsManager(dataSource);
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        http.authorizeHttpRequests(configurer -> {
+            configurer
+                .requestMatchers(HttpMethod.GET, "/api/employees").hasRole("EMPLOYEE")
+                // '**' is a wildcard to accept subpaths
+                .requestMatchers(HttpMethod.GET, "/api/employees/**").hasRole("EMPLOYEE")
+                .requestMatchers(HttpMethod.POST, "/api/employees").hasRole("MANAGER")
+                .requestMatchers(HttpMethod.PUT, "/api/employees").hasRole("MANAGER")
+                .requestMatchers(HttpMethod.DELETE, "/api/employees/**").hasRole("ADMIN");
+        });
+
+        // Use HTTP Basic authentication
+        http.httpBasic(Customizer.withDefaults());
+
+        // disable Cross Site Request Forgery (CSRF)
+        // in general, not required for stateless REST APIs that use POST, PUT, DELETE and/or PATCH
+        http.csrf(csrf -> csrf.disable());
+
+        return http.build();
+    }
+
+/*
     // In memory configuration
     @Bean
     public InMemoryUserDetailsManager userDetailsManager() {
@@ -42,29 +79,5 @@ public class DemoSecurityConfig {
         // Since we defined our users here... Spring Boot will NOT use the users/pass from the application.properties file
         return new InMemoryUserDetailsManager(john, mary, susan);
     }
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        http.authorizeHttpRequests(configurer -> {
-            configurer
-                .requestMatchers(HttpMethod.GET, "/api/employees").hasRole("EMPLOYEE")
-                // '**' is a wildcard to accept subpaths
-                .requestMatchers(HttpMethod.GET, "/api/employees/**").hasRole("EMPLOYEE")
-                .requestMatchers(HttpMethod.POST, "/api/employees").hasRole("MANAGER")
-                .requestMatchers(HttpMethod.PUT, "/api/employees").hasRole("MANAGER")
-                .requestMatchers(HttpMethod.DELETE, "/api/employees/**").hasRole("ADMIN");
-        });
-
-        // Use HTTP Basic authentication
-        http.httpBasic(Customizer.withDefaults());
-
-        // disable Cross Site Request Forgery (CSRF)
-        // in general, not required for stateless REST APIs that use POST, PUT, DELETE and/or PATCH
-        http.csrf(csrf -> csrf.disable());
-
-        return http.build();
-    }
-
-
+*/
 }
