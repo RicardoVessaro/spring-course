@@ -6,6 +6,11 @@ DROP TABLE IF EXISTS `users`;
 --
 -- Table structure for table `users`
 --
+-- Password column must be at least 68 chars wide 
+-- {bcrypt} - 8 chars
+-- encodedPassword - 60 chars
+--
+
 
 CREATE TABLE `users` (
   `username` varchar(50) NOT NULL,
