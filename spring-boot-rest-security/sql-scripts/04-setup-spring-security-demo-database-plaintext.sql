@@ -15,6 +15,10 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Spring Security's predefined table schema. users and authorities
+--
+
+--
 -- Inserting data for table `users`
 --
 
@@ -38,6 +42,8 @@ CREATE TABLE `authorities` (
 
 --
 -- Inserting data for table `authorities`
+--
+-- Internally spring uses the 'ROLE' prefix
 --
 
 INSERT INTO `authorities` 
