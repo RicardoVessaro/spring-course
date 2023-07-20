@@ -29,6 +29,18 @@ public class InstructorDetail {
     @Column(name="hobby")
     private String hobby;
 
+    // add @OneToOne annotation
+    /*
+        mappedBy = "instructorDetail":
+            Refers to "instructorDetail" property in "Instructor" class
+     */
+    /*
+        CascadeType.ALL :
+            Cascade all operations to the associated instructor
+     */
+    @OneToOne(mappedBy = "instructorDetail", cascade = CascadeType.ALL)
+    private Instructor instructor;
+
     public InstructorDetail() {
     }
 
@@ -59,6 +71,14 @@ public class InstructorDetail {
 
     public void setHobby(String hobby) {
         this.hobby = hobby;
+    }
+
+    public Instructor getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
     }
 
     @Override
