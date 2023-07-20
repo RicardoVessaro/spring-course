@@ -37,8 +37,12 @@ public class InstructorDetail {
     /*
         CascadeType.ALL :
             Cascade all operations to the associated instructor
+
+         cascade = {...} :
+            Choosing all operations except REMOVE.
+            In this case delete the Instructor Detail but not the Instructor
      */
-    @OneToOne(mappedBy = "instructorDetail", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "instructorDetail", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Instructor instructor;
 
     public InstructorDetail() {
