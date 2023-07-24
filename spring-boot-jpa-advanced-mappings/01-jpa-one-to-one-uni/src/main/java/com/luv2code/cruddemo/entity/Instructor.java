@@ -41,8 +41,9 @@ public class Instructor {
     @JoinColumn(name = "instructor_detail_id")
     private InstructorDetail instructorDetail;
 
+    // By default the fetch type for one to many is lazy
     @OneToMany(mappedBy = "instructor",
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE,
                                                     CascadeType.DETACH, CascadeType.REFRESH})
     List<Course> courses;
