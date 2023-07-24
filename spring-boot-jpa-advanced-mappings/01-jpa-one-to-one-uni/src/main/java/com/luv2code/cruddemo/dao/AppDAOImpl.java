@@ -88,10 +88,14 @@ public class AppDAOImpl implements AppDAO {
 
         // create query
         /*
-            with JOIN FETCH the Course information is also retrieved
+            With JOIN FETCH the Course information is also retrieved.
+            The join fetch in InstructorDetail is to reduce the number of queries retrieving all the data once.
          */
         TypedQuery<Instructor> query = entityManager.createQuery(
-          "select i from Instructor i JOIN FETCH i.courses where i.id = :data", Instructor.class
+          "select i from Instructor i " +
+                  "JOIN FETCH i.courses " +
+                  "JOIN FETCH i.instructorDetail " +
+                  "where i.id = :data ", Instructor.class
         );
         query.setParameter("data", theId);
 
