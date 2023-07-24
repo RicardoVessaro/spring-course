@@ -2,7 +2,8 @@ package com.luv2code.cruddemo.entity;
 
 import jakarta.persistence.*;
 
-@Entity(name="course")
+@Entity
+@Table(name="course")
 public class Course {
 
     // define our fields
