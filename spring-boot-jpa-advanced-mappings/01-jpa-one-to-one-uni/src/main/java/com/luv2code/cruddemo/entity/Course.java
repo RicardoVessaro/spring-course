@@ -40,6 +40,24 @@ public class Course {
     @JoinColumn(name = "course_id")
     private List<Review> reviews;
 
+    /*
+        Mapping a Many-To-Many relationship
+        @JoinTable: Refers the join table in the database in 'name'.
+            Define join columns telling the columns from this side of the relationship using 'joinColumns',
+                in the Course class the column reffering to the course table is 'course_id' (this side).
+            'inverseJoinColumns' reffer to columns from the other side of the relationship (inverse), the otherside in
+                the Course class is student table defined by 'student_id' column
+     */
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(
+        name = "course_student",
+        joinColumns = @JoinColumn(name = "course_id"),
+        inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    List<Student> students;
+
     public Course() {
     }
 
@@ -88,6 +106,24 @@ public class Course {
         }
 
         reviews.add(theReview);
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    // add a convenience method
+    public void addStudent(Student theStudent) {
+
+        if(students == null) {
+            students = new ArrayList<>();
+        }
+
+        students.add(theStudent);
     }
 
     @Override
