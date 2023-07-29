@@ -2,6 +2,9 @@ package com.luv2code.cruddemo.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "student")
 public class Student {
@@ -19,6 +22,19 @@ public class Student {
 
     @Column(name = "email")
     private String email;
+
+    /*
+        Remember, in the Student class the side is the student table reffered by 'student_id' column,
+            then the other side (inverse) is 'course_id' column which references the course table.
+     */
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE,
+        CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(
+            name = "course_student",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private List<Course> courses;
 
     public Student() {
     }
@@ -59,6 +75,25 @@ public class Student {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    // add convenience method
+
+    public void addCourse(Course theCourse) {
+
+        if(courses == null) {
+            courses = new ArrayList<>();
+        }
+
+        courses.add(theCourse);
     }
 
     @Override
