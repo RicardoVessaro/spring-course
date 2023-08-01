@@ -16,11 +16,13 @@ public class MyDemoLoggingAspect {
             "execution(public void addAccount())"
 
         Run this code BEFORE - target object method: "public void addAccount()"
+
+        It matches addAccount() method in any class
      */
     @Before("execution(public void addAccount())")
     public void beforeAddAccountAdvice() {
 
-        System.out.println("\n=====>>> Executing @Before advice on addAccount()");
+        System.out.println("\n=====>>> Executing @Before advice on method");
 
     }
 
