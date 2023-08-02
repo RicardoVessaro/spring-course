@@ -19,7 +19,7 @@ public class MyDemoLoggingAspect {
 
         It matches addAccount() method in any class
      */
-    @Before("execution(public void com.luv2code.aopdemo.dao.AccountDAO.addAccount())")
+    @Before("execution(public void add*())")
     public void beforeAddAccountAdvice() {
 
         System.out.println("\n=====>>> Executing @Before advice on method");
