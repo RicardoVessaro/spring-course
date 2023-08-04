@@ -19,6 +19,18 @@ public class MyDemoLoggingAspect {
     @Pointcut("execution(* com.luv2code.aopdemo.dao.*.*(..))")
     private void forDaoPackage() {}
 
+    // create a pointcut for getter methods
+    @Pointcut("execution(* com.luv2code.aopdemo.dao.*.get*(..))")
+    private void getter() {}
+
+    // create a pointcut for setter methods
+    @Pointcut("execution(* com.luv2code.aopdemo.dao.*.set*(..))")
+    private void setter() {}
+
+    // create a pointcut: include package ... exclude getter/setter
+    @Pointcut("forDaoPackage() && !(getter() || setter())")
+    private void forDaoPackageNoGetterSetter() {}
+
     // let's start with a @Before advice
     /*
         pointcut expression example:
@@ -31,14 +43,14 @@ public class MyDemoLoggingAspect {
     /*
         using forDaoPackage pointcut.
      */
-    @Before("forDaoPackage()")
+    @Before("forDaoPackageNoGetterSetter()")
     public void beforeAddAccountAdvice() {
 
         System.out.println("\n=====>>> Executing @Before advice on method");
 
     }
 
-    @Before("forDaoPackage()")
+    @Before("forDaoPackageNoGetterSetter()")
     public void performApiAnalytics() {
         System.out.println("\n=====>>> Performing API analytics");
     }
