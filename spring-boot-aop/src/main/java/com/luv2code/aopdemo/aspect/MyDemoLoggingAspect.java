@@ -2,11 +2,14 @@ package com.luv2code.aopdemo.aspect;
 
 import com.luv2code.aopdemo.Account;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /*
     @Order: Defines the execution order of the aspects, starting by the lowest order
@@ -15,6 +18,25 @@ import org.springframework.stereotype.Component;
 @Component
 @Order(2)
 public class MyDemoLoggingAspect {
+
+    // add a new advice for @AfterReturning on the findAccounts method
+    /*
+        Advice executed after the method return if no exception is thrown.
+    */
+    @AfterReturning(
+            pointcut = "execution(* com.luv2code.aopdemo.dao.AccountDAO.findAccounts(..))",
+            returning = "result" // the value must match the parameter name
+    )
+    public void afterReturningFindAccountsAdvice(JoinPoint theJoinPoint, List<Account> result) {
+
+        // print out which method we are advising on
+        String method = theJoinPoint.getSignature().toShortString();
+        System.out.println("\n=====>>> Executing @AfterReturning on method: " + method);
+
+        // print out the results of the method call
+        System.out.println("\n=====>>> result is: " + result);
+
+    }
 
     // this is where we add all of our related advices for logging
 
