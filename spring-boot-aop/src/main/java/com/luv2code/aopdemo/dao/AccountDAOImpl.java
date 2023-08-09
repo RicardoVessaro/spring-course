@@ -15,6 +15,16 @@ public class AccountDAOImpl implements AccountDAO{
 
     @Override
     public List<Account> findAccounts() {
+        return findAccounts(false);
+    }
+
+    @Override
+    public List<Account> findAccounts(boolean tripWire) {
+
+        // for academic purposes ... simulate an exception
+        if(tripWire) {
+            throw new RuntimeException("No soup for you!!!");
+        }
 
         List<Account> myAccounts = new ArrayList<>();
 
@@ -30,6 +40,7 @@ public class AccountDAOImpl implements AccountDAO{
 
         return myAccounts;
     }
+
 
     @Override
     public void addAccount(Account theAccount, boolean vipFlag) {
