@@ -30,10 +30,25 @@ public class MyDemoLoggingAspect {
         long begin = System.currentTimeMillis();
 
         // now, let's execute the method
+
+        Object result = null;
+
         /*
-            'proceed' calls the target method.
-         */
-        Object result = theProceedingJoinPoint.proceed();
+            Handling the exception, so the exception was never thrown to the main app.
+        */
+        try {
+            /*
+                'proceed' calls the target method.
+            */
+            result = theProceedingJoinPoint.proceed();
+        }
+        catch (Exception exc) {
+             // log the exception
+            System.out.println(exc.getMessage());
+
+            // give a user a custom message
+            result = "Major accident! But no worries, your private AOP helicopter is on the way";
+        }
 
         // get end timestamp
         long end = System.currentTimeMillis();
